@@ -45,19 +45,19 @@ code-block-font-size: "0.85em"
 ---
 
 **Response 1: Prior Evolution and Justification**
-*How did your understanding of Houston's extreme rainfall evolve through the iterative prior specification process? What knowledge sources proved most valuable for extreme value analysis?*
+*Through the interative prior process my understanding of Houston rainfall was changed. I knew Houston was subject to plenty of rain and at times extreme rains like Harvey but looking at the RL v RP plots the return period of higher return levels is less that I thought.*
 
 **Response 2: Data Learning and Posterior Insights**
-*How did the observed data change your prior beliefs about GEV parameters? What does this reveal about the balance between domain knowledge and empirical evidence in Bayesian analysis?*
+*It made me slightly less reliant on GEV parameters. Using the observed data improved the variablity of the return levels and helped provided a more realistic prediction.*
 
 **Response 3: Two-Station Bayesian Comparison**
-*Should the same priors apply to both stations? How do posterior differences relate to geographic and climatic factors, and what are the implications for regional analysis?*
+*Yes, since we chose one of the five closest stations. This can show the relationship between the similar observed data affecting the priors and that observed data being a factor of environmental variables. We should choose our priors more based on domain knowledge to get as close as station specific as we can.*
 
 **Response 4: Uncertainty Quantification and Model Validation**
-*How does Bayesian uncertainty quantification compare to MLE approaches? What do the diagnostic results tell you about model reliability?*
+*I think Bayesian uncertainty quantification is a little more clear to see through the plots and makes more sense to me than MLE. It also shows that the model is more reliable than MLE.*
 
 **Response 5: Bayesian Workflow for PS1**
-*How will this iterative workflow experience help you tackle regional extreme value analysis in PS1? What challenges do you anticipate?*
+*It will help me be able to factor out methods that could lead to poor models and avoid me having to test a bunch out. I anticipate that the syntax and understanding the little things will pose a significant challenge.*
 
 ## Data Setup and Package Loading
 
@@ -281,7 +281,7 @@ end
 ::: {.callout-note}
 ## Think
 
-Are these return level curves reasonable for Houston's climate, based on your domain knowledge?
+Are these return level curves reasonable for Houston's climate, based on your domain knowledge? Not really no, there is a wide range of possible return levels with a lot of extremes
 :::
 
 ### Priors on Return Levels
@@ -352,7 +352,7 @@ prior_idata_v2 = let
     fname = joinpath(lab_dir, "prior_v2.nc")
     model = gev_model_quantile_priors([]; return_level_priors=return_level_priors)
     overwrite = true
-    load_or_sample(fname, model; overwrite=overwrite)
+    load_or_sample(fname, model; overwrite=false)
 end
 prior_GEVs_v2 = vec(GeneralizedExtremeValue.(prior_idata_v2.posterior.μ, exp.(prior_idata_v2.posterior.log_σ), prior_idata_v2.posterior.ξ))
 ```
@@ -412,7 +412,7 @@ We can look at `optim_result` from the MLE optimization to see if it thinks it c
 
 ```{julia}
 mle_estimate = maximum_likelihood(bayes_model, NelderMead(); maxiters=1_000)
-mle_estimate.optim_result
+                             
 ```
 
 Similarly for MAP
@@ -568,7 +568,7 @@ nearest_stations = find_nearest_stations(my_station, stations, 5)
 We will pick one of these five nearest stations for comparison
 
 ```{julia}
-comparison_stnid = 478 # MODIFY THIS AND CHOOSE YOUR COMPARISON
+comparison_stnid = 93 # MODIFY THIS AND CHOOSE YOUR COMPARISON
 
 comparison_station = @chain stations begin
     @filter(stnid == !!comparison_stnid)
