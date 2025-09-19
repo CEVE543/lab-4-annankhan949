@@ -44,35 +44,6 @@ code-line-numbers: false
 code-block-font-size: "0.85em"
 ---
 
-## Do Before Lab {.unnumbered}
-
-1. **Accept the assignment.** Use the GitHub Classroom link posted on Canvas to "accept" the assignment, which will give you your own GitHub repository.
-2. **Clone your repository** to your computer using GitHub Desktop or the command line.
-3. **Open the repository in VS Code** directly from VS Code, GitHub Desktop, or your command line.
-4. **Activate the Julia environment.** In VS Code, open the command palette (View → Command Palette) and type "Julia: Start REPL". Alternatively, run `julia --project=.` in the terminal, then run `using Pkg; Pkg.instantiate()` to install required packages. The easiest method is to type `]` in the REPL to enter package mode, then type `instantiate`.
-5. **Review the Bayesian workflow concepts** from Module 1, particularly prior specification and posterior inference.
-6. **Verify rendering works.** Run `quarto render index.qmd` in your terminal - it should create both PDF and HTML documents.
-
-## Do During Lab {.unnumbered}
-
-This lab guides you through implementing a complete Bayesian workflow for extreme value analysis:
-
-1. **Develop iterative priors** using domain knowledge and prior predictive checks
-2. **Implement Bayesian GEV inference** using Turing.jl with informative priors
-3. **Compare two stations** using the same Bayesian framework
-4. **Validate your models** using modern Bayesian diagnostics with ArviZ.jl
-
-As with previous labs, you do not need to write code from scratch -- focus on understanding the workflow, modifying parameters, and interpreting results.
-
-To submit your work, push your changes to GitHub, render to PDF, and upload the PDF to Canvas.
-
-## Your Analysis {.unnumbered}
-
-::: {.callout-important}
-## Instructions
-Delete this entire section (including the "Do Before Lab" and "Do During Lab" sections above) and replace it with your analysis responses. Use the numbered format below for your final submission.
-:::
-
 **Response 1: Prior Evolution and Justification**
 *How did your understanding of Houston's extreme rainfall evolve through the iterative prior specification process? What knowledge sources proved most valuable for extreme value analysis?*
 
@@ -177,7 +148,7 @@ Next, choose the same station you used in Lab 3 for your analysis.
 
 
 ```{julia}
-my_stnid = 111  # REQUIRED: replace with your chosen station ID
+my_stnid = 779 # REQUIRED: replace with your chosen station ID
 my_station = @chain stations begin
     @filter(stnid == !!my_stnid)  # <1>
     first
